@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chessboard JS</title>
+    <!-- CSS file -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.min.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/chessboard-0.3.0.min.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/fontawesome.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/app.css')}}"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div
+        class="collapse navbar-collapse justify-content-md-center"
+        id="navbarsExample10"
+      >
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              >SISTEMA DE AYUDA A LA DECISIÓN EN AJEDREZ<span class="sr-only">(current)</span></a
+            >
+          </li>
+        </ul>
+        <div class="select">
+          <form action= "/form" method="POST">
+            <select class="glow-on-hover" name="select2" id = "form2" name = "form2">
+              <option selected disabled>CHOOSE OPONENT</option>
+              <option value="Engine"></a>Chess Engine</option>
+              <option value="Human">Human</option>
+            </select>
+            <input class="glow-on-hover"  type="submit" value="Submit" id = "submit1" name = "submit1" />
+          </form> 
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card-group">
+            <div class="card text-white bg-dark">
+              <div class="card-header">
+                <span class="text-muted">
+
+                  <div class="select">
+                    <form id = "form1" action="/" method="POST">
+                      <select class="glow-on-hover" name="select1">
+                        <option selected disabled>PLAYER 2 ELO</option>
+                        <option value="Stockfish">3500</a></option>
+                        <option value="Komodo">3400</option>
+                        <option value="Movei">2600</option>
+                        <option value="Alichess">2200</option>
+                      </select>
+                      <input class="glow-on-hover"  type="submit" value="Submit" id = "submit2" name = "submit2"/>
+                    </form> 
+                  </div>
+            </span>
+                <span class="game-over"></span>
+              </div>
+              <div class="card-body">
+                <div id="board" style="width: 100%;"></div>
+                <div class="card-footer">
+                  <span class="text-muted">Player 1 </span>
+                  <span class="game-over"></span>
+                </div>
+              </div>
+            </div>
+            <div class="card text-white bg-dark">
+              <div class="card-header">
+                <span>ANALYSIS</span>
+                <div class="card text-white bg-dark">
+                  <button  class="glow-on-hover" type="button" onclick="Highlight()">
+                    CASILLAS LIBRES (SIN ATAQUE POR OPONENTE)
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight2()">
+                    CASILLAS CON ATAQUE DEL OPONENTE
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight3()">
+                    PIEZAS OPONENTES ATACADAS Y NÚMERO DE ATACANTES
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight4()">
+                    PIEZAS PROPIAS ATACADAS Y NÚMERO DE ATACANTES
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight5()">
+                    CASILLAS DÉBILES DEL OPONENTE(SIN DEFENSA DE PEÓN)
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight6()">
+                    PIEZAS ATACADAS EN DOBLE MOVIMIENTO DE CABALLO PROPIO
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight7()">
+                    MOVIMIENTO DE CABALLO PROPIO SIN DEFENSA
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight8()">
+                    PIEZAS DEL OPONENTE QUE NO ESTAN DEFENDIDAS
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight9()">
+                    PIEZAS DEL OPONENTE QUE NO ESTAN ATACADAS
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight10()">
+                    POSIBLE CLAVADA EN SIGUIENTE JUGADA DE BLANCA
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight11()">
+                    POSIBLE JAQUE EN SIGUIENTE JUGADA DE BLANCA
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight12()">
+                    PIEZAS PROPIAS QUE NO ESTÁN ATACADAS
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight13()">
+                    PIEZAS PROPIAS QUE NO ESTÁN DEFENDIDAS
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight14()">
+                    MOVIMIENTO DE CABALLO NEGRO SIN DEFENSA
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight15()">
+                    PIEZAS ATACADAS EN DOBLE MOVIMIENTO DE CABALLO OPONENTE
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight16()">
+                    POSIBLE JAQUE EN SIGUIENTE JUGADA DEL RIVAL
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="Highlight17()">
+                    POSIBLE CLAVADA EN SIGUIENTE JUGADA DEL RIVAL
+                  </button>
+                  <button class="glow-on-hover" type="button" onclick="removeGreySquares()">
+                    RESET SQUARES
+                  </button>
+                  
+            </div>
+              </div>
+            </div>
+            <div class="card text-white bg-dark">
+              <div class="card-header">
+                <span>Moves</span>
+              </div>
+              <div class="card-body" id="game-moves">
+                <table
+                  class="table table-striped table-sm table-dark table-hover"
+                >
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col" class="active">White</th>
+                      <th scope="col">Black</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pgn-moves">
+                    <!-- PGN Table data -->
+                  </tbody>
+                </table>
+                <div class="card-footer">
+                  <span class="text-muted">Analysis</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/chessboard-0.3.0.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+    <script src="{{ url_for('static', filename='js/app.js')}}"></script>
+    <script>
+      var cfg = {
+        position: '{{ fen }}',
+        showNotation: true,
+        draggable: true,
+        onDrop: onDrop
+      };
+      var board = ChessBoard('board', cfg);
+    </script>
+  </body>
+</html>
